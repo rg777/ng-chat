@@ -46,7 +46,43 @@
                     </div>
                     <img *ngIf="window.chattingTo.avatar && isAvatarVisible(window, message, i)" alt="" class="avatar" height="30" width="30" [src]="window.chattingTo.avatar" />
                     <span [innerHtml]="message.message | emojify:emojisEnabled | linkfy:linkfyEnabled"></span>
-                </div>
+              <div class="card card-stats" *ngIf="message.card" type="submit" style="cursor:pointer;">
+                            <div class="card-header" data-background-color="green" (click)="message.card.selected=!message.card.selected">
+                              <i class="material-icons">{{message.card.confidence}}</i>
+                            </div>
+                            <div style="text-align: left;" class="card-content" (click)="message.card.selected=!message.card.selected">
+                              <p>{{message.card.date}}</p>
+                              <p>{{message.card.timing}}</p>
+                              <p>{{message.card.locations.displayName}}</p>
+                            </div>
+                            <div class="card-footer" *ngIf="message.card.raw_data">
+
+                              <div class="stats" *ngFor="let loc of message.card.raw_data.locations; let i=index">
+                                <div *ngIf="i<2">
+                                  <div (click)="message.card.locations=loc">
+                                    <a>{{loc.displayName}}</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="card-content" *ngIf="message.card.selected">
+
+                                    <label class="control-label" style=" float: left;">Subject</label>
+                                    <input type="text" class="form-control" [(ngModel)]="message.card.subject">
+                                    <label class="control-label" style=" float: left;">Message</label>
+                                    <input type="text" class="form-control" [(ngModel)]="message.card.message">
+                                    
+                                    <div>
+                                    <p style=" float: left;">Members</p>
+                                      <span *ngFor="let participant of message.card.participants">
+                                        {{participant}}
+                                      </span>
+                                    </div>
+                                <button *ngIf="!message.card.booked" type="submit" class="btn btn-danger pull-right" (click)="button_clicked(message.card);message.card.selected=!message.card.selected">Set Meeting</button>
+                            </div>
+                        </div>  
+              </div>
             </div>
             <input [ngModel]="window.newMessage | emojify:emojisEnabled" (ngModelChange)="window.newMessage=$event" type="text" (keypress)="onChatInputTyped($event, window)" [placeholder]="messagePlaceholder" (blur)="toggleWindowFocus(window)" (focus)="toggleWindowFocus(window)"/>            
         </ng-container>
