@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChildren, HostListener } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, HostListener, Output,EventEmitter } from '@angular/core';
 import { ChatAdapter } from './core/chat-adapter';
 import { User } from "./core/user";
 import { Message } from "./core/message";
