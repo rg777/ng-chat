@@ -23,7 +23,7 @@ export class NgChat implements OnInit {
     UserStatus = UserStatus;
 
     @Input()
-    public title: string = "Friends";
+    public title: string = "Meeting Members"; 
 
     @Input()
     public adapter: ChatAdapter;
@@ -54,6 +54,8 @@ export class NgChat implements OnInit {
 
     @Input()
     public audioEnabled: boolean = true;
+  
+    @Output() buttonSelected = new EventEmitter(); //emit card data to parent component
 
     @Input() // TODO: This might need a better content strategy
     public audioSource: string = 'https://raw.githubusercontent.com/rpaschoal/ng-chat/master/src/ng-chat/assets/notification.wav';
@@ -358,5 +360,12 @@ export class NgChat implements OnInit {
     toggleWindowFocus(window: Window): void
     {
         window.hasFocus = !window.hasFocus;
+    }
+
+    button_clicked(data: any){
+
+      console.log(data);
+      this.buttonSelected.emit(data);
+
     }
 }
