@@ -2,7 +2,7 @@ export class Message
 {
     public fromId: any;
     public toId: any;
-    public message: string;
+    public message?: string;
     public card?: {
         date?: string;
         timing?: string;
